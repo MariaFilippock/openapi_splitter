@@ -3,16 +3,14 @@ import './App.css';
 import YamlUploader from './components/YamlUploader/YamlUploader';
 import {Layout} from 'antd';
 import FileTreeSider from './components/FileTreeSider/FileTreeSider';
+import CodeViewer from './components/CodeViewer/CodeViewer';
 
 const {Header, Sider, Content} = Layout;
 
 const App = () => {
     const [parsedValue, setParsedValue] = useState<any>(null);
-    console.log(parsedValue);
-
-    /**
-     * Валидация полученных данных из загруженного yaml-файла
-     */
+    const [fileInfo, setFileInfo] = useState<any>(null);
+    const [chosenFilePath, setChosenFilePath] = useState<string>('');
 
     return (
         <div className="App">
@@ -23,9 +21,18 @@ const App = () => {
 
                 <Layout>
                     <Sider width={300} style={{backgroundColor: 'white'}}>
-                        <FileTreeSider parsedValue={parsedValue} />
+                        <FileTreeSider
+                            parsedValue={parsedValue}
+                            onFileLoad={setFileInfo}
+                            setChosenFilePath={setChosenFilePath}/>
                     </Sider>
-                    <Content style={{backgroundColor: 'lightblue'}}>Content</Content>
+
+                    <Content style={{backgroundColor: 'lightblue'}}>
+                        <CodeViewer
+                            fileInfo={fileInfo}
+                            chosenFilePath={chosenFilePath}
+                        />
+                    </Content>
                 </Layout>
             </Layout>
         </div>

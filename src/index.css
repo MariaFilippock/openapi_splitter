@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background: #fff;
+    color: #222;
+    font-weight: 300;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* убрать pointer */
+.tree-folder .ant-tree-node-content-wrapper {
+    cursor: default !important;
+}
+
+/* убрать hover подсветку */
+.tree-folder .ant-tree-node-content-wrapper:hover {
+    background-color: transparent !important;
+}

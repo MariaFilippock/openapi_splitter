@@ -20,6 +20,9 @@ const addPathNode = (root: DataNode[], params: string[], parentPath = "paths") =
         node = {
             key: isLeaf ? `${currentPath}.yaml` : currentPath,
             title: isLeaf ? `${current}.yaml` : current,
+            isLeaf: isLeaf,
+            selectable: isLeaf,
+            className: isLeaf ? "" : "tree-folder",
             children: isLeaf ? undefined : [],
         };
 
@@ -55,13 +58,20 @@ export const buildOpenApiTree = (doc: OpenAPIObject): DataNode[] => {
     const tree: DataNode[] = [];
 
     //1 уровень
-    tree.push({key: "openapi.yaml", title: "openapi.yaml"});
+    tree.push({
+        key: "openapi.yaml",
+        title: "openapi.yaml",
+        selectable: true,
+        isLeaf: true,
+    });
 
     //уровень path
     if (doc.paths && Object.keys(doc).length > 0) {
         tree.push({
             key: 'paths',
             title: 'paths',
+            selectable: false,
+            className: "tree-folder",
             children: buildPathNodes(doc.paths),
         })
     }
@@ -74,9 +84,13 @@ export const buildOpenApiTree = (doc: OpenAPIObject): DataNode[] => {
             componentsChildren.push({
                 key: `components/${compKey}`,
                 title: compKey,
+                selectable: false,
+                className: "tree-folder",
                 children: Object.keys(compValue || {}).map((name) => ({
                     key: `components/${compKey}/${name}.yaml`,
                     title: `${name}.yaml`,
+                    selectable: true,
+                    isLeaf: true,
                 })),
             });
         }
@@ -85,6 +99,8 @@ export const buildOpenApiTree = (doc: OpenAPIObject): DataNode[] => {
             tree.push({
                 key: "components",
                 title: "components",
+                selectable: false,
+                className: "tree-folder",
                 children: componentsChildren,
             });
         }

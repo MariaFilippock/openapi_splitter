@@ -20,7 +20,9 @@
   "devDependencies": {
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "openapi3-ts": "^4.5.0",
+    "react-syntax-highlighter": "^16.1.0",
     "typescript": "^4.9.5"
   },
   "scripts": {
