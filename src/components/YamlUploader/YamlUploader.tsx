@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import YAML from 'yaml';
 import {InboxOutlined} from '@ant-design/icons';
 import {message, Upload, UploadProps} from 'antd';
