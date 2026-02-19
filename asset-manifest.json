@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/openapi_splitter/static/css/main.b34cb11b.css",
+    "main.js": "/openapi_splitter/static/js/main.42edb981.js",
+    "index.html": "/openapi_splitter/index.html",
+    "main.b34cb11b.css.map": "/openapi_splitter/static/css/main.b34cb11b.css.map",
+    "main.42edb981.js.map": "/openapi_splitter/static/js/main.42edb981.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b34cb11b.css",
+    "static/js/main.42edb981.js"
+  ]
+}
