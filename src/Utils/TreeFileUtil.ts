@@ -13,8 +13,10 @@ const addPathNode = (root: DataNode[], params: string[], parentPath = "paths") =
 
     const isLeaf = rest.length === 0;
 
-    // Ищем существующий узел по key
-    let node = root.find((n) => n.key === currentPath || n.key === `${currentPath}.yaml`);
+    // Ищем существующий узел по key:
+    // - для листа ищем только файл
+    // - для папки ищем только папку
+    let node = root.find((n) => isLeaf ? n.key === `${currentPath}.yaml` : n.key === currentPath);
 
     if (!node) {
         node = {
