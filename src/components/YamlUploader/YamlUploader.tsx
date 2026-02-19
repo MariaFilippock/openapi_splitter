@@ -27,8 +27,6 @@ const YamlUploader: React.FC<IProps> = ({onParsed}) => {
         } catch (err: any) {
             message.error("Ошибка парсинга YAML: " + err.message);
         }
-
-
     }
 
 
