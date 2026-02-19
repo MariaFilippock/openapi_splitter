@@ -5,14 +5,14 @@ import {message, Upload, UploadProps} from 'antd';
 
 const {Dragger} = Upload;
 
-type ParsedData = any;
+interface IProps {
+    onParsed: (data: any) => void;
+}
 
 /**
  * Компонент с загрузкой Yaml файла и его парсингом
  * */
-const YamlUploader: React.FC = () => {
-    const [parsedValue, setParsedValue] = useState<ParsedData | null>(null);
-    console.log(parsedValue);
+const YamlUploader: React.FC<IProps> = ({onParsed}) => {
 
     const props: UploadProps = {
         name: 'file',
@@ -22,10 +22,15 @@ const YamlUploader: React.FC = () => {
             const reader = new FileReader();
 
             reader.onload = (event) => {
+                const result = event.target?.result as string;
+
+                if (!result.trim()) {
+                    message.error("Файл пуст");
+                    return;
+                }
                 try {
-                    const parsedValue = YAML.parse(event.target?.result as string);
-                    setParsedValue(parsedValue);
-                    // dispatch(parseOpenApi(parsed));
+                    const parsedValue = YAML.parse(result);
+                    onParsed(parsedValue);
                     message.success(`${file.name} успешно распарсен`);
                 } catch (err: any) {
                     message.error("Ошибка парсинга YAML: " + err.message);
