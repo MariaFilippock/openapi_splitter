@@ -1,6 +1,7 @@
 {
   "name": "openapi_splitter",
   "version": "0.1.0",
+  "homepage": "https://mariafilippock.github.io/openapi_splitter",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.1.0",
@@ -23,13 +24,16 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "openapi3-ts": "^4.5.0",
     "react-syntax-highlighter": "^16.1.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "gh-pages": "^6.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
