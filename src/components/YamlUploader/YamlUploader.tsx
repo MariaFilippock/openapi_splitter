@@ -1,9 +1,10 @@
 import React from 'react';
 import YAML from 'yaml';
 import {InboxOutlined} from '@ant-design/icons';
-import {message, Upload, UploadProps} from 'antd';
+import {Input, message, Upload, UploadProps} from 'antd';
 
 const {Dragger} = Upload;
+const {TextArea} = Input;
 
 interface IProps {
     onParsed: (data: any) => void;
@@ -13,6 +14,23 @@ interface IProps {
  * Компонент с загрузкой Yaml файла и его парсингом
  * */
 const YamlUploader: React.FC<IProps> = ({onParsed}) => {
+    const parseYaml = (text: string) => {
+        if (!text) {
+            message.error("Файл пуст");
+            return;
+        }
+
+        try {
+            const parsedValue = YAML.parse(text);
+            onParsed(parsedValue);
+            message.success('YAML успешно распарсен');
+        } catch (err: any) {
+            message.error("Ошибка парсинга YAML: " + err.message);
+        }
+
+
+    }
+
 
     const props: UploadProps = {
         name: 'file',
@@ -28,13 +46,8 @@ const YamlUploader: React.FC<IProps> = ({onParsed}) => {
                     message.error("Файл пуст");
                     return;
                 }
-                try {
-                    const parsedValue = YAML.parse(result);
-                    onParsed(parsedValue);
-                    message.success(`${file.name} успешно распарсен`);
-                } catch (err: any) {
-                    message.error("Ошибка парсинга YAML: " + err.message);
-                }
+
+                parseYaml(result);
             };
 
             reader.readAsText(file);
@@ -54,8 +67,13 @@ const YamlUploader: React.FC<IProps> = ({onParsed}) => {
                 </p>
                 <p className="ant-upload-text">Для загрузки перетащите YAML файл в эту область.</p>
             </Dragger>
+            <TextArea
+                rows={4}
+                placeholder="Вставьте openapi.yaml сюда..."
+                onBlur={(e) => parseYaml(e.target.value)}
+                style={{marginTop: 10}}
+            />
         </div>
-
     );
 };
 
