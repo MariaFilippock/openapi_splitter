@@ -11,21 +11,24 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "antd": "^5.3.2",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-scripts": "5.0.1",
+    "react-syntax-highlighter": "^16.1.0",
     "web-vitals": "^2.1.4",
     "yaml": "^2.3.1"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "gh-pages": "^6.1.1",
     "openapi3-ts": "^4.5.0",
-    "react-syntax-highlighter": "^16.1.0",
-    "typescript": "^4.9.5",
-    "gh-pages": "^6.1.1"
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",

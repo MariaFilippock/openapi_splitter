@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Switch, Tree} from 'antd';
 import {OpenAPIObject} from 'openapi3-ts/oas30';
 import {buildOpenApiTree} from '../../Utils/TreeFileUtil';
+import {getFileInfoByKey} from '../../Utils/OpenApiFileUtil';
 
 
 interface IProps {
@@ -23,38 +24,6 @@ const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFile
 
     const openApiTreeData = buildOpenApiTree(parsedValue);
 
-    const getfileInfoByName = (doc: OpenAPIObject, key: string) => {
-        const cleanKey = key.replace(".yaml", "");
-        const params = cleanKey.split("/");
-
-        const rootKey = params[0] as keyof OpenAPIObject;
-
-        const rootObject = doc[rootKey];
-
-        if (!rootObject) return undefined;
-
-        if (rootKey === "openapi") {
-            const {paths, components, ...rest} = doc;
-
-            return rest;
-        }
-
-        // если ищем внутри paths
-        if (rootKey === "paths") {
-            const pathUrl = "/" + params.slice(1).join("/");
-            return doc.paths?.[pathUrl];
-        }
-
-        // если ищем внутри components
-        if (rootKey === "components") {
-            return params
-                .slice(1)
-                .reduce((acc, segment) => acc?.[segment], doc.components as any);
-        }
-
-        return rootObject;
-    };
-
     const onSelect = (selectedKeys: React.Key[]) => {
         const key = selectedKeys[0] as string;
 
@@ -62,7 +31,7 @@ const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFile
             return;
         }
 
-        const value = getfileInfoByName(parsedValue, key);
+        const value = getFileInfoByKey(parsedValue, key);
 
         setChosenFilePath(key);
         onFileLoad(value);
