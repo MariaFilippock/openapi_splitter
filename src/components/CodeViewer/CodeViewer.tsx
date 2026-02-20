@@ -2,13 +2,13 @@ import React from 'react';
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import {materialLight} from "react-syntax-highlighter/dist/esm/styles/prism";
 import YAML from "yaml";
+import {useSelector} from 'react-redux';
+import {RootState} from '../../Store/store';
 
-interface IProps {
-    fileInfo: any;
-    chosenFilePath: string;
-}
 
-const CodeViewer: React.FC<IProps> = ({fileInfo, chosenFilePath}) => {
+const CodeViewer: React.FC = () => {
+    const fileInfo = useSelector((state: RootState) => state.openApi.fileInfo);
+    const chosenFilePath = useSelector((state: RootState) => state.openApi.chosenFilePath);
 
     return (
         <div>
