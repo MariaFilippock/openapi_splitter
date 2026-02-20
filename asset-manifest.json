@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/openapi_splitter/static/css/main.f9db72dd.css",
+    "main.css": "/openapi_splitter/static/css/main.922e5aa7.css",
     "main.js": "/openapi_splitter/static/js/main.d4d9b653.js",
     "index.html": "/openapi_splitter/index.html",
-    "main.f9db72dd.css.map": "/openapi_splitter/static/css/main.f9db72dd.css.map",
+    "main.922e5aa7.css.map": "/openapi_splitter/static/css/main.922e5aa7.css.map",
     "main.d4d9b653.js.map": "/openapi_splitter/static/js/main.d4d9b653.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9db72dd.css",
+    "static/css/main.922e5aa7.css",
     "static/js/main.d4d9b653.js"
   ]
 }
