@@ -1,31 +1,35 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Input, Switch, Tree} from 'antd';
-import {OpenAPIObject} from 'openapi3-ts/oas30';
 import {buildOpenApiTree} from '../../Utils/TreeFileUtil';
 import {getFileInfoByKey} from '../../Utils/OpenApiFileUtil';
 import {filterTree, getAllKeys} from '../../Utils/SearchFileUtil';
+import {AppDispatch, RootState} from '../../Store/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {setAutoExpandParent, setExpandedKeys, setTreeSearchValue, setFileInfo, setChosenFilePath} from '../../Store/AppSlice';
 
 
-interface IProps {
-    parsedValue: OpenAPIObject;
-    onFileLoad: (data: any) => void;
-    setChosenFilePath: (path: any) => void;
-}
+const FileTreeSider: React.FC = () => {
+    const dispatch: AppDispatch = useDispatch();
 
-const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFilePath}) => {
+    const parsedValue = useSelector((state: RootState) => state.openApi.parsedValue);
+    const expandedKeys = useSelector((state: RootState) => state.openApi.expandedKeys);
+    const autoExpandParent = useSelector((state: RootState) => state.openApi.autoExpandParent);
+    const searchValue = useSelector((state: RootState) => state.openApi.treeSearchValue);
+
     const [showLine, setShowLine] = useState<boolean>(true);
-    const [searchValue, setSearchValue] = useState("");
-    const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
-    const [autoExpandParent, setAutoExpandParent] = useState(true);
 
     //древовидная структура openapi для отрисовки treeData
-    const openApiTreeData = useMemo(() => buildOpenApiTree(parsedValue), [parsedValue]);
+    const openApiTreeData = useMemo(() => parsedValue ? buildOpenApiTree(parsedValue) : [], [parsedValue]);
 
     //все ключи для раскрытия полученного дерева при загрузке
     const allKeys = useMemo(() => getAllKeys(openApiTreeData), [openApiTreeData]);
 
     //при загрузке раскрываем всё
-    useEffect(() => setExpandedKeys(allKeys), [allKeys]);
+    useEffect(() => {
+        if (parsedValue) {
+            dispatch(setExpandedKeys(allKeys));
+        }
+    }, [parsedValue, allKeys, dispatch]);
 
     //отфильтрованное дерево по поисковому запросу
     const filteredTreeData = useMemo(() => filterTree(openApiTreeData, searchValue), [openApiTreeData, searchValue]);
@@ -33,24 +37,22 @@ const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFile
     /**
      * Обработчик поиска элемента в древовидной структуре загруженного списка openapi.
      */
-    const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.value;
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        dispatch(setTreeSearchValue(value));
 
-            if (!value.trim()) {
-                // раскрываем всё дерево, если поиск пустой
-                setExpandedKeys(allKeys);
-                setSearchValue("");
-                return;
-            }
+        if (!value.trim()) {
+            // раскрываем всё дерево, если поиск пустой
+            dispatch(setExpandedKeys(allKeys));
+            dispatch(setTreeSearchValue(""));
+            return;
+        }
 
-            const keysToExpand = getAllKeys(filterTree(openApiTreeData, value));
+        const keysToExpand = getAllKeys(filterTree(openApiTreeData, value));
 
-            setExpandedKeys([...new Set(keysToExpand)]);
-            setSearchValue(value);
-            setAutoExpandParent(true);
-        },
-        [openApiTreeData, allKeys]
-    );
+        dispatch(setExpandedKeys([...new Set(keysToExpand)]));
+        dispatch(setAutoExpandParent(true));
+    };
 
     /**
      * Обработчик клика по файлу для получения данных файла, которые отображаются в CodeViewer
@@ -62,10 +64,10 @@ const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFile
             return;
         }
 
-        const value = getFileInfoByKey(parsedValue, key);
+        const value = getFileInfoByKey(parsedValue!, key);
 
-        setChosenFilePath(key);
-        onFileLoad(value);
+        dispatch(setChosenFilePath(key));
+        dispatch(setFileInfo(value));
     };
 
     return (
@@ -87,8 +89,8 @@ const FileTreeSider: React.FC<IProps> = ({parsedValue, onFileLoad, setChosenFile
                 expandedKeys={expandedKeys}
                 autoExpandParent={autoExpandParent}
                 onExpand={(keys) => {
-                    setExpandedKeys(keys);
-                    setAutoExpandParent(false);
+                    dispatch(setExpandedKeys(keys));
+                    dispatch(setAutoExpandParent(false));
                 }}
             />
         </div>
