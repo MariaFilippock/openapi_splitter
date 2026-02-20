@@ -6,6 +6,7 @@ import {filterTree, getAllKeys} from '../../Utils/SearchFileUtil';
 import {AppDispatch, RootState} from '../../Store/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAutoExpandParent, setExpandedKeys, setTreeSearchValue, setFileInfo, setChosenFilePath} from '../../Store/AppSlice';
+import styles from './FileTreeSider.module.scss';
 
 
 const FileTreeSider: React.FC = () => {
@@ -71,15 +72,15 @@ const FileTreeSider: React.FC = () => {
     };
 
     return (
-        <div style={{padding: 15}}>
+        <div className={styles.siderContainer}>
             <Input.Search
                 placeholder="Поиск файла..."
                 onChange={handleSearch}
-                style={{marginBottom: 12}}
                 value={searchValue}
+                className={styles.inputSearch}
             />
 
-            <div style={{marginBottom: 16}}>
+            <div className={styles.showLineContainer}>
                 showLine: <Switch checked={showLine} onChange={setShowLine}/>
             </div>
             <Tree

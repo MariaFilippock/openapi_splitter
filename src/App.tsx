@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import YamlUploader from './components/YamlUploader/YamlUploader';
 import {Layout} from 'antd';
 import FileTreeSider from './components/FileTreeSider/FileTreeSider';
@@ -13,18 +13,18 @@ const App = () => {
     const parsedValue = useSelector((state: RootState) => state.openApi.parsedValue);
 
     return (
-        <div className="App">
-            <Layout style={{height: "100vh"}}>
-                <Header style={{backgroundColor: 'white', height: 'auto', border: '1px solid lightgrey', padding: 20}}>
+        <div>
+            <Layout  className="LayoutWrapper">
+                <Header className="HeaderWrapper">
                     <YamlUploader/>
                 </Header>
 
                 <Layout>
-                    <Sider width={300} style={{backgroundColor: 'white'}}>
+                    <Sider width={400} className="SiderWrapper">
                         {parsedValue && <FileTreeSider/>}
                     </Sider>
 
-                    <Content style={{backgroundColor: 'white'}}>
+                    <Content className="ContentWrapper">
                         <CodeViewer/>
                     </Content>
                 </Layout>

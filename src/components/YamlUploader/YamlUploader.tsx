@@ -7,6 +7,7 @@ import {OpenAPIObject} from 'openapi3-ts/oas30';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../Store/store';
 import {setFileList, setParsedValue} from '../../Store/AppSlice';
+import styles from './YamlUploader.module.scss';
 
 const {Dragger} = Upload;
 const {TextArea} = Input;
@@ -41,6 +42,7 @@ const YamlUploader: React.FC = () => {
         name: 'file',
         multiple: false,
         accept: '.yaml,.yml',
+        className: styles.dragger,
         fileList,
         beforeUpload(file) {
             const reader = new FileReader();
@@ -82,7 +84,7 @@ const YamlUploader: React.FC = () => {
 
     return (
         <>
-            <div>
+            <div className={styles.loadContainer}>
                 <Dragger {...props}>
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined/>
@@ -93,11 +95,10 @@ const YamlUploader: React.FC = () => {
                     rows={4}
                     placeholder="Или вставьте openapi.yaml сюда..."
                     onBlur={(e) => parseYaml(e.target.value)}
-                    style={{marginTop: 10}}
                 />
             </div>
 
-            <div style={{marginTop: 10}}>
+            <div className={styles.btnContainer}>
                 <Button type="primary" onClick={handleDownloadZip}>
                     Скачать ZIP
                 </Button>
