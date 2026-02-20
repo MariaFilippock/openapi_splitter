@@ -1,0 +1,46 @@
+.codeViewerWrapper {
+  height: 100%;
+  background: #f5f7fa;
+  box-sizing: border-box;
+}
+
+.cardContainer {
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #ffffff;
+}
+
+.icon {
+    font-size: 18px;
+    margin-right: 8px;
+    color: #1677ff;
+}
+
+.title {
+    margin: 0 !important;
+}
+
+.contentWrapper {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    background: #fafafa;
+}
+
+.emptyContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

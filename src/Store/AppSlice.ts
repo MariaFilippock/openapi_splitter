@@ -2,7 +2,17 @@ import React from 'react';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {OpenAPIObject} from 'openapi3-ts/oas30';
 
-interface AppState {
+/**
+ * @param parsedValue - распарсенный объект OpenAPI из загруженного YAML файла.
+ * @param fileInfo - данные по выбранному файлу из древовидной структуры
+ * @param chosenFilePath - путь выбранного файла в дереве
+ * @param fileList - список файлов, загруженных через компонент Upload
+ * @param treeSearchValue - текущее значение строки поиска по дереву файлов (для фильтрации treeData)
+ * @param expandedKeys - массив ключей узлов дерева, которые сейчас раскрыт
+ * @param autoExpandParent - флаг автоматического раскрытия родительских узлов
+ *
+ */
+interface IAppState {
     parsedValue: OpenAPIObject | null;
     fileInfo: any | null;
     chosenFilePath: string;
@@ -12,7 +22,7 @@ interface AppState {
     autoExpandParent: boolean;
 }
 
-const initialState: AppState = {
+const initialState: IAppState = {
     parsedValue: null,
     fileInfo: null,
     chosenFilePath: '',
