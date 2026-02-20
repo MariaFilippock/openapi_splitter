@@ -31,7 +31,7 @@ const App = () => {
     return (
         <div className="App">
             <Layout style={{height: "100vh"}}>
-                <Header style={{backgroundColor: 'lightyellow', height: 'auto'}}>
+                <Header style={{backgroundColor: 'white', height: 'auto', border: '1px solid lightgrey', padding: 20}}>
                     <YamlUploader onParsed={setParsedValue}/>
                     <div style={{marginTop: 10}}>
                         <Button type="primary" onClick={handleDownloadZip}>
@@ -42,13 +42,15 @@ const App = () => {
 
                 <Layout>
                     <Sider width={300} style={{backgroundColor: 'white'}}>
+                        {parsedValue &&
                         <FileTreeSider
                             parsedValue={parsedValue}
                             onFileLoad={setFileInfo}
                             setChosenFilePath={setChosenFilePath}/>
+                        }
                     </Sider>
 
-                    <Content style={{backgroundColor: 'lightblue'}}>
+                    <Content style={{backgroundColor: 'white'}}>
                         <CodeViewer
                             fileInfo={fileInfo}
                             chosenFilePath={chosenFilePath}
