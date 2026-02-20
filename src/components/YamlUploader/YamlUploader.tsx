@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import YAML from 'yaml';
 import {InboxOutlined} from '@ant-design/icons';
 import {Input, message, Upload, UploadProps} from 'antd';
@@ -14,6 +14,8 @@ interface IProps {
  * Компонент с загрузкой Yaml файла и его парсингом
  * */
 const YamlUploader: React.FC<IProps> = ({onParsed}) => {
+    const [fileList, setFileList] = useState<any[]>([]);
+
     const parseYaml = (text: string) => {
         if (!text) {
             message.error("Файл пуст");
@@ -34,6 +36,7 @@ const YamlUploader: React.FC<IProps> = ({onParsed}) => {
         name: 'file',
         multiple: false,
         accept: '.yaml,.yml',
+        fileList,
         beforeUpload(file) {
             const reader = new FileReader();
 
@@ -49,11 +52,12 @@ const YamlUploader: React.FC<IProps> = ({onParsed}) => {
             };
 
             reader.readAsText(file);
+            setFileList([file]);
             return false;
         },
 
-        onDrop(e) {
-            console.log("Загруженный файл", e.dataTransfer.files);
+        onRemove() {
+            setFileList([]);
         },
     };
 
